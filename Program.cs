@@ -55,7 +55,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new RsaSecurityKey(RSAExtensions.GetPublicKey())
         };
     });
-builder.Services.AddDbContext<UserContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("db")));
+builder.Services.AddDbContext<UserContext>(options => options.UseSqlServer(
+        builder.Configuration.GetConnectionString("db")).LogTo(Console.WriteLine));
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();

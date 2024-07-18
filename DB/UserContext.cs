@@ -13,7 +13,13 @@ namespace WebAppGB_ForDocker.DB
             
         }
 
-        public UserContext(DbContextOptions<UserContext> dbContext) : base(dbContext) { }
+        public UserContext(DbContextOptions options) : base(options) { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("Data Source = .\\SQLEXPRESS; Initial catalog = UsersDB; Trusted_Connection = True; TrustServerCertificate = True")
+                .UseLazyLoadingProxies().LogTo(Console.WriteLine);
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
